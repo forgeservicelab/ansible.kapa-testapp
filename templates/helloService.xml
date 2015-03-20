@@ -1,0 +1,27 @@
+<SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:id="http://x-road.eu/xsd/identifiers" xmlns:sdsb="http://x-road.eu/xsd/sdsb.xsd">
+    <SOAP-ENV:Header>
+        <sdsb:client id:objectType="SUBSYSTEM">
+            <id:sdsbInstance>{{ sdsb_instance }}</id:sdsbInstance>
+            <id:memberClass>{{ member_class }}</id:memberClass>
+            <id:memberCode>{{ member_code }}</id:memberCode>
+            <id:subsystemCode>{{ subsystem_code }}</id:subsystemCode>
+        </sdsb:client>
+        <sdsb:service id:objectType="SERVICE">
+            <id:sdsbInstance>FI-DEV</id:sdsbInstance>
+            <id:memberClass>GOV</id:memberClass>
+            <id:memberCode>0245437-2</id:memberCode>
+            <id:subsystemCode>TestService</id:subsystemCode>
+            <id:serviceCode>helloService</id:serviceCode>
+            <id:serviceVersion>v1</id:serviceVersion>
+        </sdsb:service>
+        <sdsb:userId>EE1234567890</sdsb:userId>
+        <sdsb:id>ID11234</sdsb:id>
+    </SOAP-ENV:Header>
+    <SOAP-ENV:Body>
+        <ns1:helloService xmlns:ns1="http://vrk-test.x-road.fi/producer">
+            <request>
+                <name>{{ ansible_ssh_user }}</name>
+            </request>
+        </ns1:helloService>
+    </SOAP-ENV:Body>
+</SOAP-ENV:Envelope>

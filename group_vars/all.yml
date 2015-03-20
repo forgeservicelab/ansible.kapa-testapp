@@ -1,0 +1,6 @@
+---
+soap_message_filename_prefix: helloService
+sdsb_instance: FI-DEV
+member_class: COM
+member_code: 0785944-0
+subsystem_code: FORGEDemo

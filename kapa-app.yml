@@ -1,0 +1,29 @@
+---
+- hosts: all
+  sudo: yes
+  tasks:
+    - name: Check for presence of packages and install if missing
+      apt: pkg={{ item }} state=present
+      with_items:
+        - curl
+        - xmlstarlet
+
+    - name: Copy SOAP message xml over
+      template: src=templates/{{ soap_message_filename_prefix }}.xml dest=/home/{{ ansible_ssh_user }}/{{ soap_message_filename_prefix }}.xml
+
+    - name: Send SOAP message and register result
+      shell: curl -s -o - -k -d @"{{ soap_message_filename_prefix }}".xml --header "Content-Type:text/xml" -X POST https://"{{ secure_server_address }}"/ | xmlstarlet sel -N ts1="http://vrk-test.x-road.fi/producer" -t -m '//ts1:message' -v 'text()'
+      register: result
+
+#    - name: debug
+#      debug: msg="{{ result.stdout }}"
+
+    - name: Delete remote files
+      file: path="/home/{{ ansible_ssh_user }}/{{ item }}.xml" state=absent
+      with_items:
+        - "{{ soap_message_filename_prefix }}"
+        - "{{ soap_message_filename_prefix }}Reply"
+
+    - name: Fail if result not found
+      command: /bin/false
+      when: result.stdout.find('Hello ''{{ ansible_ssh_user }}''') == -1
