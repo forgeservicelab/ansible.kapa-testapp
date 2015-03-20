@@ -1,7 +1,8 @@
 kapa-testapp
 =========
 
-Playbook for installing Secure Server for X-Road (Kansallinen Palveluväylä).
+Playbook for running test service calls to KaPA.
+
 
 Requirements
 ------------
