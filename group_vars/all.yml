@@ -4,4 +4,4 @@ sdsb_instance: FI-DEV
 member_class: COM
 member_code: 0785944-0
 subsystem_code: FORGEZato
-target_host: forgess00-test
+target_url: http://193.166.25.205:11223/kapa/relay

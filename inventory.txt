@@ -1,1 +1,2 @@
-forgess00-test.forgeservicelab.fi
+#forgess00-test.forgeservicelab.fi
+localhost

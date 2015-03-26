@@ -5,7 +5,7 @@ import requests, getopt, sys, lxml
 import lxml.objectify
 
 def usage():
-    print('Usage: '+sys.argv[0]+' -i sdsb_instance -l member_class -c member_code -s subsystem_code -t target_host -g test_string')
+    print('Usage: '+sys.argv[0]+' -i sdsb_instance -l member_class -c member_code -s subsystem_code -t target_url -g test_string')
 
 def main():
     try:
@@ -21,7 +21,7 @@ def main():
     member_class = None
     member_code = None
     subsystem_code = None
-    target_host = None
+    target_url = None
     test_string = None
     for opt, arg in opts:
         if opt in ("-i", "--sdsb_instance"):
@@ -32,8 +32,8 @@ def main():
             member_code = arg
         elif opt in ("-s", "--subsystem_code"):
             subsystem_code = arg
-        elif opt in ("-t", "--target_host"):
-            target_host = arg
+        elif opt in ("-t", "--target_url"):
+            target_url = arg
         elif opt in ("-g", "--test_string"):
             test_string = arg
         else:
@@ -76,7 +76,7 @@ def main():
 
     headers = {"Content-Type": "text/xml",
                "Content-Length": len(encoded_request)}
-    response = requests.post(url="https://"+target_host,
+    response = requests.post(url=target_url,
                      headers = headers,
                      data = encoded_request,
                      verify=False)
@@ -84,12 +84,11 @@ def main():
     xmlobj = lxml.objectify.fromstring(response.text.encode('utf-8'))
     hsres = xmlobj.Body.getchildren()[0]
     responseLine = hsres.response.findtext('ts1:message', namespaces=hsres.nsmap)
+    print responseLine
 
     if responseLine.find('Hello '+test_string) >= 0:
-        print responseLine
         exit(0)
     else:
-	    print responseLine
 	    exit(1)
 
 if __name__ == "__main__":
