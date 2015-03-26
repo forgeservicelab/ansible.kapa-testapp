@@ -1,6 +1,7 @@
 ---
-soap_message_filename_prefix: helloService
+#soap_message_filename: helloService.xml
 sdsb_instance: FI-DEV
 member_class: COM
 member_code: 0785944-0
-subsystem_code: FORGEDemo
+subsystem_code: FORGEZato
+target_host: forgess00-test

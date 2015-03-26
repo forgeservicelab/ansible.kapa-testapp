@@ -1,18 +1,12 @@
 kapa-testapp
 =========
 
-Playbook for running test service calls to KaPA.
-
+Playbook for sending test service request to VRK TestService in development KaPA.
 
 Requirements
 ------------
 
 - Ubuntu 14.04 or later on target machine.
-
-Role Variables
---------------
-
-- `secure_server_address` - Address of secure server to POST request to.
 
 License
 -------
@@ -23,3 +17,5 @@ Author Information
 ------------------
 
 Jukka Nousiainen
+
+FORGE Service Lab
