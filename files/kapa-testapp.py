@@ -83,13 +83,18 @@ def main():
 
     xmlobj = lxml.objectify.fromstring(response.text.encode('utf-8'))
     hsres = xmlobj.Body.getchildren()[0]
-    responseLine = hsres.response.findtext('ts1:message', namespaces=hsres.nsmap)
+    try:
+        responseLine = hsres.response.findtext('ts1:message', namespaces=hsres.nsmap)
+    except AttributeError as ae:
+        print "Error occurred when parsing response: " + str(ae)
+        exit(1)
+
     print responseLine
 
     if responseLine.find('Hello '+test_string) >= 0:
         exit(0)
     else:
-	    exit(1)
+        exit(1)
 
 if __name__ == "__main__":
     main()
