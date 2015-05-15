@@ -1,8 +1,7 @@
 ---
-#soap_message_filename: helloService.xml
 sdsb_instance: FI-DEV
-member_class: COM
-member_code: 0785944-0
-subsystem_code: FORGEZato
-target_url: https://forgess00-test.forgeservicelab.fi
+member_class:
+member_code:
+subsystem_code:
+target_url:
 

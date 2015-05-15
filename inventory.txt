@@ -1,2 +1,1 @@
-#forgess00-test.forgeservicelab.fi
 localhost

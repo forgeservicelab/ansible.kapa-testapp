@@ -49,9 +49,9 @@ def main():
         </sdsb:client>
         <sdsb:service id:objectType="SERVICE">
             <id:sdsbInstance>FI-DEV</id:sdsbInstance>
-            <id:memberClass>GOV</id:memberClass>
-            <id:memberCode>0245437-2</id:memberCode>
-            <id:subsystemCode>TestService</id:subsystemCode>
+            <id:memberClass>COM</id:memberClass>
+            <id:memberCode>0785944-0</id:memberCode>
+            <id:subsystemCode>FORGEZato</id:subsystemCode>
             <id:serviceCode>helloService</id:serviceCode>
             <id:serviceVersion>v1</id:serviceVersion>
         </sdsb:service>
@@ -59,7 +59,7 @@ def main():
         <sdsb:id>ID11234</sdsb:id>
     </SOAP-ENV:Header>
     <SOAP-ENV:Body>
-        <ns1:helloService xmlns:ns1="http://vrk-test.x-road.fi/producer">
+        <ns1:helloService xmlns:ns1="http://test.x-road.fi/producer">
             <request>
                 <name>{4}</name>
             </request>
