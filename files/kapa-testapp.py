@@ -1,15 +1,15 @@
 #!/usr/bin/python
 
 import requests, getopt, sys, lxml
-#from lxml import etree
 import lxml.objectify
+#from pprint import pprint as pp
 
 def usage():
     print('Usage: '+sys.argv[0]+' -i sdsb_instance -l member_class -c member_code -s subsystem_code -t target_url -g test_string')
 
 def main():
     try:
-        opts, args = getopt.getopt(sys.argv[1:], "i:l:c:s:t:g:", ["help", "output="])
+        opts, args = getopt.getopt(sys.argv[1:], "i:l:c:s:t:g:m:e:y:n:", ["help", "output="])
     except getopt.GetoptError as err:
         print str(err)
         usage()
@@ -22,20 +22,33 @@ def main():
     member_code = None
     subsystem_code = None
     target_url = None
-    test_string = None
+    test_string = "default_test_string"
+    target_member_class = None
+    target_member_code = None
+    target_subsystem_code = None
+    target_namespace = "http://forge-test.x-road.fi/producer"
+
     for opt, arg in opts:
         if opt in ("-i", "--sdsb_instance"):
             sdsb_instance = arg
-        elif opt in ("-l", "--member_class"):
-	    member_class = arg
-        elif opt in ("-c", "--member_code"):
+        elif opt in ("-l", "--client_member_class"):
+	        member_class = arg
+        elif opt in ("-c", "--client_member_code"):
             member_code = arg
-        elif opt in ("-s", "--subsystem_code"):
+        elif opt in ("-s", "--client_subsystem_code"):
             subsystem_code = arg
         elif opt in ("-t", "--target_url"):
             target_url = arg
         elif opt in ("-g", "--test_string"):
             test_string = arg
+        elif opt in ("-m", "--target_member_class"):
+            target_member_class = arg
+        elif opt in ("-e", "--target_member_code"):
+            target_member_code = arg
+        elif opt in ("-y", "--target_subsystem_code"):
+            target_subsystem_code = arg
+        elif opt in ("-n", "--target_namespace"):
+            target_namespace = arg
         else:
             assert False, "Unknown option"
 
@@ -48,10 +61,10 @@ def main():
             <id:subsystemCode>{3}</id:subsystemCode>
         </sdsb:client>
         <sdsb:service id:objectType="SERVICE">
-            <id:sdsbInstance>FI-DEV</id:sdsbInstance>
-            <id:memberClass>COM</id:memberClass>
-            <id:memberCode>0785944-0</id:memberCode>
-            <id:subsystemCode>FORGEZato</id:subsystemCode>
+            <id:sdsbInstance>{0}</id:sdsbInstance>
+            <id:memberClass>{5}</id:memberClass>
+            <id:memberCode>{6}</id:memberCode>
+            <id:subsystemCode>{7}</id:subsystemCode>
             <id:serviceCode>helloService</id:serviceCode>
             <id:serviceVersion>v1</id:serviceVersion>
         </sdsb:service>
@@ -59,7 +72,7 @@ def main():
         <sdsb:id>ID11234</sdsb:id>
     </SOAP-ENV:Header>
     <SOAP-ENV:Body>
-        <ns1:helloService xmlns:ns1="http://test.x-road.fi/producer">
+        <ns1:helloService xmlns:ns1="{8}">
             <request>
                 <name>{4}</name>
             </request>
@@ -70,16 +83,22 @@ def main():
 				   member_code,
 				   subsystem_code,
 				   test_string,
+                   target_member_class,
+                   target_member_code,
+                   target_subsystem_code,
+                   target_namespace,
                             )
 
     encoded_request = request.encode('utf-8')
 
     headers = {"Content-Type": "text/xml",
                "Content-Length": len(encoded_request)}
-    response = requests.post(url=target_url,
+    response = requests.post(url = target_url,
                      headers = headers,
                      data = encoded_request,
-                     verify=False)
+                     verify = False)
+
+#    pp(response.text)
 
     xmlobj = lxml.objectify.fromstring(response.text.encode('utf-8'))
     hsres = xmlobj.Body.getchildren()[0]
