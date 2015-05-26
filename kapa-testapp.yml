@@ -7,8 +7,19 @@
       with_items:
         - python-lxml
 
-    - name: Run test script against VRK TestService
-      script: files/kapa-testapp.py -i {{ sdsb_instance }} -l {{ member_class }} -c {{ member_code }} -s {{ subsystem_code }} -t {{ target_url }} -g {{ ansible_ssh_user }}
+    - name: Run test script against a test service
+      script: >
+        files/kapa-testapp.py
+        -i {{ sdsb_instance }}
+        -l {{ client_member_class }}
+        -c {{ client_member_code }}
+        -s {{ client_subsystem_code }}
+        -t {{ target_url }}
+        -g {{ ansible_ssh_user }}
+        -m {{ target_member_class }}
+        -e {{ target_member_code }}
+        -y {{ target_subsystem_code }}
+        -n {{ target_namespace }}
       register: result
 
     - name: Fail if result not found
