@@ -1,10 +1,10 @@
 ---
-sdsb_instance: FI-DEV
-client_member_class: COM
-client_member_code: 0785944-0
-client_subsystem_code: FORGEDemo
-target_url: https://forgess00-test.forgeservicelab.fi
-target_member_class: COM
-target_member_code: 0785944-0
-target_subsystem_code: TestService
-target_namespace: http://forge-test.x-road.fi/producer
+sdsb_instance:
+client_member_class:
+client_member_code:
+client_subsystem_code:
+target_url:
+target_member_class:
+target_member_code:
+target_subsystem_code:
+target_namespace:

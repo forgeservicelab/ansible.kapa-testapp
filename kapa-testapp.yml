@@ -25,3 +25,4 @@
     - name: Fail if result not found
       command: /bin/false
       when: result.stdout.find('Hello ''{{ ansible_ssh_user }}''') == -1
+

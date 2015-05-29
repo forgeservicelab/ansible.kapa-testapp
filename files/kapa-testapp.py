@@ -2,10 +2,26 @@
 
 import requests, getopt, sys, lxml
 import lxml.objectify
-#from pprint import pprint as pp
+from pprint import pprint as pp
 
 def usage():
-    print('Usage: '+sys.argv[0]+' -i sdsb_instance -l member_class -c member_code -s subsystem_code -t target_url -g test_string')
+    print('Usage: '+sys.argv[0]+' OPTIONS')
+    print('')
+    print('Where OPTIONS are:')
+    print('-i, --sdsb_instance          Identifier of KaPA instance')
+    print('-l, --client_member_class    Identifier of Subsystem making the request')
+    print('-c, --client_member_code     Identifier of Organization making the request')
+    print('-s, --client_subsystem_code  Identifier of Subsystem making the request')
+    print('-t, --target_url             URL where request is sent')
+    print('-g, --test_string            String which is embedded into request body.')
+    print('                             If not defined, "test_string" will be used.')
+    print('-m, --target_member_class    Type of Organization receiving the request (COM, GOV, PRI)')
+    print('-e, --target_member_code     Identifier of Organization receiving the request')
+    print('-y, --target_subsystem_code  Identifier of Subsystem receiving the request')
+    print('-n, --target_namespace       Namespace of target service. If not defined, ')
+    print('                             http://test.x-road.fi/producer will be used.')
+    print('')
+
 
 def main():
     try:
@@ -22,11 +38,11 @@ def main():
     member_code = None
     subsystem_code = None
     target_url = None
-    test_string = "default_test_string"
+    test_string = "test_string"
     target_member_class = None
     target_member_code = None
     target_subsystem_code = None
-    target_namespace = "http://forge-test.x-road.fi/producer"
+    target_namespace = "http://test.x-road.fi/producer"
 
     for opt, arg in opts:
         if opt in ("-i", "--sdsb_instance"):
@@ -98,7 +114,7 @@ def main():
                      data = encoded_request,
                      verify = False)
 
-#    pp(response.text)
+    pp(response.text)
 
     xmlobj = lxml.objectify.fromstring(response.text.encode('utf-8'))
     hsres = xmlobj.Body.getchildren()[0]
